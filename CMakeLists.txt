@@ -11,9 +11,6 @@ add_executable(test-fifo
         test/test-fifo.cpp
         Fifo.hpp)
 
-#add_executable(test-smoothing
-#        test/test-smoothing.cpp)
-
 add_executable(test-envelope
         test/test-envelope.cpp
         Envelope.cpp
@@ -36,13 +33,15 @@ add_executable(test-dc-blocker
         DcBlocker.hpp)
 target_link_libraries(test-dc-blocker sndfile)
 
-add_executable(test-taper
-        test/test-taper.cpp
-        Taper.hpp
-        Taper.cpp)
+add_executable(test-fast-fader
+        test/test-fast-fader.cpp
+        FastFader.cpp)
 
-add_executable(test-audio-bus
-        test/test-audio-bus.cpp
-        AudioBus.hpp)
+add_executable(test-fast-mover
+        test/test-fast-mover.cpp
+        FastFader.cpp)
+
+add_executable(gen-easing-tables
+        workbench/gen_easing_tables.cpp)
 
 add_subdirectory(noise)
