@@ -40,8 +40,7 @@ add_executable(test-fast-fader
         test/test-fast-fader.cpp
         FastFader.cpp)
 
-add_executable(test-fast-mover
-        test/test-fast-mover.cpp
-        FastMover.cpp)
+add_executable(gen-easing-tables
+        workbench/gen_easing_tables.cpp)
 
 add_subdirectory(noise)
