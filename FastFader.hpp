@@ -8,7 +8,7 @@ namespace dspkit {
     class FastFader {
     private:
         static constexpr int tableSize = 1025;
-        static constexpr float posMax = static_cast<float>(tableSize) - std::numeric_limits<float>::epsilon();
+        static constexpr float posMax = static_cast<float>(tableSize-1);
         static const float table[];
 
         enum {
