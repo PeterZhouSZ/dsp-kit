@@ -68,6 +68,12 @@ namespace dspkit {
                     (inc > 0.f ? Rising : Falling);
         }
 
+        void setPos(float pos) {
+            fCurPos = std::fmax(0.f, std::fmin(posMax, pos * (float) tableSize));
+            iCurPos = (int)fCurPos;
+            state = Stopped;
+        }
+
         float next() {
             if (state == Rising) { rise(); }
             else if (state == Falling) { fall(); }
