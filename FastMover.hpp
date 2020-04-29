@@ -2,8 +2,9 @@
 // Created by emb on 4/28/20.
 //
 // FastMover is a fast, single-stage envelope
-//
-// it uses a set of static shape tables, and no interpolation
+// scales and fits one of a collection of shapes,
+// between arbitrary points.
+// uses a set of static shape tables, and no interpolation
 
 #ifndef CRONE_FASTMOVER_HPP
 #define CRONE_FASTMOVER_HPP
