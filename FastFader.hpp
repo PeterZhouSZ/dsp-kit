@@ -2,12 +2,13 @@
 #define CRONE_FASTFADER_HPP
 
 #include <cmath>
+#include <limits>
 
 namespace dspkit {
     class FastFader {
     private:
         static constexpr int tableSize = 1025;
-        static constexpr float posMax = 1024.999f;
+        static constexpr float posMax = static_cast<float>(tableSize) - std::numeric_limits<float>::epsilon() ;
         static const float table[];
 
         enum {
@@ -49,7 +50,7 @@ namespace dspkit {
     public:
         FastFader() : state(Stopped),
                       fCurPos(0.f), iTarget(0), iCurPos(0),
-                      fTarget(0.f), inc(1), sr(48000.f) {}
+                      fTarget(0.f), inc(1), time(0), sr(48000.f) {}
 
         void setSampleRate(float sr_) {
             sr = sr_;
