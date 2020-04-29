@@ -14,16 +14,17 @@ namespace dspkit {
         enum {
             Rising, Falling, Stopped
         };
-        int state;
+        float sr;
 
         float time;
         float inc;
 
-        float sr;
-        float fTarget;
-        int iTarget;
         float fCurPos;
         int iCurPos;
+        float fTarget;
+        int iTarget;
+
+        int state;
 
         void rise() {
             fCurPos += inc;
@@ -48,9 +49,12 @@ namespace dspkit {
         }
 
     public:
-        FastFader() : state(Stopped),
-                      fCurPos(0.f), iTarget(0), iCurPos(0),
-                      fTarget(0.f), inc(1), time(0), sr(48000.f) {}
+        FastFader() :
+                sr(48000.f),
+                time(0), inc(1),
+                fCurPos(0.f), iCurPos(0),
+                fTarget(0.f), iTarget(0),
+                state(Stopped) {}
 
         void setSampleRate(float sr_) {
             sr = sr_;
