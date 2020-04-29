@@ -12,7 +12,7 @@
 #include <cassert>
 #include <functional>
 
-namespace easing {
+namespace dspkit::easing {
 
 
     /// The "linear" easing function as formalized and popularized by Robert Penner.
@@ -672,5 +672,7 @@ namespace easing {
 	return easing::linear<T>;
     }
 
+    int getNumShapes() { return (int)function::enum_count; }
 
-}    // namespace c74::min::lib::easing
+
+}    // namespace dspkit::easing

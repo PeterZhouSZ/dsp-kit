@@ -49,11 +49,15 @@ namespace dspkit {
         void move() {
             fCurPos = std::fmin(posMax, fCurPos + inc);
             iCurPos = (int) fCurPos;
-            moving = (iCurPos == tableSize_1);
+            moving = (iCurPos != tableSize_1);
             curVal = start + scale * curTable[iCurPos];
         }
 
     public:
+        FastMover() {
+            riseTable = shapeTables[0];
+            fallTable = shapeTables[0];
+        }
         void setSampleRate(float sr_) {
             sr = sr_;
         }
@@ -71,7 +75,6 @@ namespace dspkit {
         void setTarget(float target) {
             if (time <= std::numeric_limits<float>::epsilon()) {
                 setValue(target);
-                return;
             } else {
                 start = curVal;
                 end = target;

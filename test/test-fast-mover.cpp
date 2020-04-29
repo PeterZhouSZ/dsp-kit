@@ -5,8 +5,9 @@
 #include <easing.hpp>
 
 #include "FastMover.hpp"
+using namespace dspkit;
 
-dspkit::FastMover fm;
+FastMover fm;
 std::ofstream fs;
 
 void beginOutput(const std::string &path) {
@@ -16,7 +17,7 @@ void beginOutput(const std::string &path) {
 
 void process(int count) {
     for (int i=0; i<count; ++i) {
-        fs << fm.next() << std::endl;
+        fs << fm.getNextValue() << std::endl;
     }
 }
 
@@ -54,8 +55,8 @@ void testShape(int shapeIndex) {
 
 
 int main() {
-    testShape(0);
-    testShape(1);
-    testShape(2);
+    for (int i=0; i<(int)easing::function::enum_count; ++i) {
+        testShape(i);
+    }
 }
 
