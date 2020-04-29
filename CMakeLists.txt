@@ -39,7 +39,7 @@ add_executable(test-fast-fader
 
 add_executable(test-fast-mover
         test/test-fast-mover.cpp
-        FastFader.cpp)
+        FastMover.cpp)
 
 add_executable(gen-easing-tables
         workbench/gen_easing_tables.cpp)

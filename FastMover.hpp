@@ -22,9 +22,9 @@ namespace dspkit {
         static constexpr int tableSize = 1025;
         static constexpr int tableSize_1 = 1024;
         static constexpr float posMax = static_cast<float>(tableSize) - std::numeric_limits<float>::epsilon();
-        static constexpr int numTables = 4;
+        static constexpr int numTables = 31;
 
-        static const float shapeTables[tableSize][numTables];
+        static const float shapeTables[numTables][tableSize];
 
         float sr;
         float time;
@@ -91,14 +91,12 @@ namespace dspkit {
             fallTable = shapeTables[shapeTableIndex];
         }
 
-        float next() {
+        float getNextValue() {
             if (moving) { move(); }
             return curVal;
         }
 
     };
-
-
 }
 
 #endif //CRONE_FASTMOVER_HPP

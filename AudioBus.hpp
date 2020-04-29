@@ -5,7 +5,9 @@
 #ifndef CRONE_BUS_H
 #define CRONE_BUS_H
 
-#include "dsp-kit/Smoother.hpp"
+#include <cassert>
+#include "FastFader.hpp"
+#include "FastMover.hpp"
 
 namespace dspkit {
 
@@ -15,8 +17,8 @@ namespace dspkit {
         typedef AudioBus<numChannels, blockSize> BusT;
     public:
         float buf[numChannels][blockSize];
-        typedef dspkit::AudioLevelSmoother LevelSmoother;
-        typedef dspkit::EnvelopeSmoother PanSmoother;
+        typedef dspkit::FastFader LevelSmoother;
+        typedef dspkit::FastMover PanSmoother;
 
         // clear the entire bus
         void clear() {

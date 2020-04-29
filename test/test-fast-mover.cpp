@@ -31,26 +31,17 @@ void testShape(int shapeIndex) {
     beginOutput(outputFileName);
     fm.setRiseShape(shapeIndex);
     fm.setFallShape(shapeIndex);
-    fm.setTime(0);
-    fm.setTarget()
-
-
-}
-
-
-int main() {\
-    beginOutput("test-fast-mover-output.data");
-
     fm.setSampleRate(48000);
+    fm.setTime(0);
+    fm.setTarget(50);
     fm.setTime(1.0);
-    fm.setTarget(40.0);
-
+    fm.setTarget(0.0);
     process(20000);
 
     fm.setTime(0.5);
     fm.setTarget(100);
 
-    process(10000);
+    process(20000);
 
     fm.setTime(0.3);
     fm.setTarget(-28);
@@ -58,5 +49,13 @@ int main() {\
     process(20000);
 
     finishOutput();
+
+}
+
+
+int main() {
+    testShape(0);
+    testShape(1);
+    testShape(2);
 }
 

@@ -79,7 +79,7 @@ namespace dspkit {
             state = Stopped;
         }
 
-        float next() {
+        float getNextValue() {
             if (state == Rising) { rise(); }
             else if (state == Falling) { fall(); }
             return table[iCurPos];
