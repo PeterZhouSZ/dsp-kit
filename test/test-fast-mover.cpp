@@ -2,6 +2,7 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
+#include <easing.hpp>
 
 #include "FastMover.hpp"
 
@@ -24,9 +25,20 @@ void finishOutput() {
     fs.close();
 }
 
+void testShape(int shapeIndex) {
+    std::string shapeName = easing::function_info[shapeIndex];
+    std::string outputFileName = "test_" + shapeName + ".data";
+    beginOutput(outputFileName);
+    fm.setRiseShape(shapeIndex);
+    fm.setFallShape(shapeIndex);
+    fm.setTime(0);
+    fm.setTarget()
 
-int main() {
-    std::ofstream ofs;
+
+}
+
+
+int main() {\
     beginOutput("test-fast-mover-output.data");
 
     fm.setSampleRate(48000);
@@ -42,7 +54,6 @@ int main() {
 
     fm.setTime(0.3);
     fm.setTarget(-28);
-
 
     process(20000);
 

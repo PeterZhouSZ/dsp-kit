@@ -11,9 +11,6 @@ add_executable(test-fifo
         test/test-fifo.cpp
         Fifo.hpp)
 
-#add_executable(test-smoothing
-#        test/test-smoothing.cpp)
-
 add_executable(test-envelope
         test/test-envelope.cpp
         Envelope.cpp
@@ -41,7 +38,7 @@ add_executable(test-fast-fader
         FastFader.cpp)
 
 add_executable(test-fast-mover
-        test/test-fast-fader.cpp
+        test/test-fast-mover.cpp
         FastFader.cpp)
 
 add_executable(gen-easing-tables
