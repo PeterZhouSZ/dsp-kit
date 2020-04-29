@@ -25,26 +25,21 @@ void finishOutput() {
 }
 
 
+
 int main() {
     std::ofstream ofs;
-    beginOutput("test-fader-output.m");
+    begin("test-fader-output.m");
 
     ff.setSampleRate(48000);
     ff.setTime(1.0);
     ff.setTarget(1.0);
 
-    process(20000);
-
-    ff.setTime(0.5);
-    ff.setTarget(0.5);
-
     process(10000);
 
-    ff.setTime(0.3);
-    ff.setTarget(0.8);
+    ff.setTime(0.5);
+    ff.setTarget(0.2;)
 
-
-    process(20000);
+    process(10000);
 
     finishOutput();
 }
