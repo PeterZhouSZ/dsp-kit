@@ -25,30 +25,31 @@ namespace dspkit {
         static constexpr int numTables = 31;
         static const float shapeTables[numTables][tableSize];
 
-        float sr;
-        float time;
-        float inc;
+        float sr{};
+        float time{};
+        float inc{};
 
         // current segment definition
-        float start;
-        float end;
-        float scale;
+        float start{};
+        float end{};
+        float scale{};
 
         // current position as fractional table index
-        float fCurPos;
-        int iCurPos;
-        float curVal;
+        float fCurPos{};
+        int iCurPos{};
+        float curVal{};
 
-        const float *curTable;
+        const float *curTable{};
         const float *riseTable;
         const float *fallTable;
 
-        bool moving;
+        bool moving{};
 
         void move() {
-            fCurPos = std::fmin(posMax, fCurPos + inc);
+            float newPos = fCurPos + inc;
+            fCurPos = newPos < posMax ? newPos : posMax;
             iCurPos = (int) fCurPos;
-            moving = (iCurPos != tableSize_1);
+            moving = (iCurPos < tableSize);
             curVal = start + scale * curTable[iCurPos];
         }
 

@@ -41,6 +41,9 @@ add_executable(test-fast-mover
         test/test-fast-mover.cpp
         FastMover.cpp)
 
+add_executable(test-onepole-smoother
+        test/test-onepole-smoother.cpp)
+
 add_executable(gen-easing-tables
         tools/gen_easing_tables.cpp)
 
