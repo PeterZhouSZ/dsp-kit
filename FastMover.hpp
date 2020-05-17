@@ -19,11 +19,10 @@ namespace dspkit {
 
     class FastMover {
     private:
-        static constexpr int tableSize = 1025;
-        static constexpr int tableSize_1 = 1024;
+        static constexpr int tableSize = 4097;
+        static constexpr int tableSize_1 = tableSize - 1;
         static constexpr float posMax = static_cast<float>(tableSize_1);
         static constexpr int numTables = 31;
-
         static const float shapeTables[numTables][tableSize];
 
         float sr;

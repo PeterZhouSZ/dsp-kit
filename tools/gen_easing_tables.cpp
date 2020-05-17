@@ -27,7 +27,7 @@ void genTable(int n, int shape) {
 int main() {
 
     // table size
-    int n = 1025;
+    int n = 4097;
 
     int numShapes = (int)easing::function::enum_count;
 

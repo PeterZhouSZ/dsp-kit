@@ -12,6 +12,7 @@ std::ofstream fs;
 
 void beginOutput(const std::string &path) {
     fs.open(path);
+    std::cout << path << std::endl;
     //fs << "data = [ " << std::endl;
 }
 
@@ -33,22 +34,27 @@ void testShape(int shapeIndex) {
     fm.setRiseShape(shapeIndex);
     fm.setFallShape(shapeIndex);
     fm.setSampleRate(48000);
+
+    // rise
     fm.setTime(0);
-    fm.setTarget(50);
+    fm.setTarget(0);
+    fm.setTime(0.5);
+    fm.setTarget(100.0);
+    process(24000);
+    // fall
+    fm.setTarget(0);
+    process(24000);
+    // immediate jump
+    fm.setTime(0.0);
+    fm.setTarget(-100);
+    // aborted rise
     fm.setTime(1.0);
     fm.setTarget(0.0);
-    process(20000);
-
-    fm.setTime(0.5);
-    fm.setTarget(100);
-
-    process(20000);
-
-    fm.setTime(0.3);
-    fm.setTarget(-28);
-
-    process(20000);
-
+    process(24000);
+    // aborted fall
+    fm.setTime(1.0);
+    fm.setTarget(-100.0);
+    process(24000);
     finishOutput();
 
 }

@@ -42,6 +42,6 @@ add_executable(test-fast-mover
         FastMover.cpp)
 
 add_executable(gen-easing-tables
-        workbench/gen_easing_tables.cpp)
+        tools/gen_easing_tables.cpp)
 
 add_subdirectory(noise)
