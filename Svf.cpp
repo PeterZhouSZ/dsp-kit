@@ -14,24 +14,24 @@ Svf::Svf() {
     clear();
 }
 
-// pitch table maps [0, 1] to midi [0, 127]
-void Svf::initPitchTable(double sr_) {
-    auto sz_1 = gTabSize -1;
-    double x = 0.0;
-    double inc = 127.0 / sz_1;
-    for (unsigned int i = 0; i < sz_1; ++i) {
-        x += inc;
-        double hz = Conversion<double>::midihz(x);
-        gTab[i] = static_cast<float>(tan(M_PI * hz / sr_));
-    }
-    // extra element for "extended" lookup
-    gTab[sz_1] = gTab[sz_1 - 1];
-}
-
-void Svf::setCutoffPitch(float pitch) {
-    this->g = Lut<float>::lookupLinear(pitch, gTab.data(), gTabSize);
-    calcSecondaryCoeffs();
-}
+//// pitch table maps [0, 1] to midi [0, 127]
+//void Svf::initPitchTable(double sr_) {
+//    auto sz_1 = gTabSize -1;
+//    double x = 0.0;
+//    double inc = 127.0 / sz_1;
+//    for (unsigned int i = 0; i < sz_1; ++i) {
+//        x += inc;
+//        double hz = Conversion<double>::midihz(x);
+//        gTab[i] = static_cast<float>(tan(M_PI * hz / sr_));
+//    }
+//    // extra element for "extended" lookup
+//    gTab[sz_1] = gTab[sz_1 - 1];
+//}
+//
+//void Svf::setCutoffPitch(float pitch) {
+//    this->g = Lut<float>::lookupLinear(pitch, gTab.data(), gTabSize);
+//    calcSecondaryCoeffs();
+//}
 
 void Svf::clear() {
     v0z = 0;

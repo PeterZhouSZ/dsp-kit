@@ -14,18 +14,22 @@
 
 #include <limits>
 #include <cmath>
+#include <functional>
 
 #include "clamp.hpp"
 
 namespace dspkit {
 
     class FastMover {
-    private:
         static constexpr int tableSize = 4097;
+        typedef const float (*TableData)[tableSize];
+        static constexpr int numTables = 31;
+
+    private:
         static constexpr int tableSize_1 = tableSize - 1;
         static constexpr float posMax = static_cast<float>(tableSize_1);
-        static constexpr int numTables = 31;
-        static const float shapeTables[numTables][tableSize];
+        static const float defaultShapeTables[numTables][tableSize];
+        TableData shapeTables;
 
         float sr{};
         float time{};
@@ -60,7 +64,8 @@ namespace dspkit {
         }
 
     public:
-        FastMover() {
+        explicit FastMover(TableData tableData= nullptr) {
+            shapeTables = (tableData == nullptr) ? defaultShapeTables : tableData;
             riseTable = shapeTables[0];
             fallTable = shapeTables[0];
         }
@@ -105,6 +110,15 @@ namespace dspkit {
             return curVal;
         }
 
+    public:
+        // helper: initialize a set of table data using a transform function
+        static void initTableData(float (*data)[tableSize], const std::function<float(float)>& transform) {
+            for (int tab=0; tab<numTables; ++tab) {
+                for (int pos=0; pos<tableSize; ++pos) {
+                    data[tab][pos] = transform(defaultShapeTables[tab][pos]);
+                }
+            }
+        }
     };
 }
 

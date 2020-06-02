@@ -10,11 +10,11 @@ namespace dspkit {
         // c-tor / d-tor
         Svf();
 
-        // initialize internal lookup table for linear pitch control
-        // @param sr: sample rate
-        // @param baseFreq: base frequency (pitch == 0)
-        // @param numOct: how many octaves to compute above base frequency
-        void initPitchTable(double sr);
+//        // initialize internal lookup table for linear pitch control
+//        // @param sr: sample rate
+//        // @param baseFreq: base frequency (pitch == 0)
+//        // @param numOct: how many octaves to compute above base frequency
+//        void initPitchTable(double sr);
 
         // clear the internal filter state
         void clear();
@@ -51,9 +51,9 @@ namespace dspkit {
         void update(float x);
 
     private:
-        static constexpr size_t gTabSize = 1024;
-        // lookup table for primary coefficient (pitch-wise)
-        std::array<float, gTabSize> gTab{};
+//        static constexpr size_t gTabSize = 1024;
+//        // lookup table for primary coefficient (pitch-wise)
+//        std::array<float, gTabSize> gTab{};
 
         // sample rate
         float sr{};
