@@ -21,9 +21,10 @@
 namespace dspkit {
 
     class FastMover {
+    public:
+        static constexpr int numTables = 31;
         static constexpr int tableSize = 4097;
         typedef const float (*TableData)[tableSize];
-        static constexpr int numTables = 31;
 
     private:
         static constexpr int tableSize_1 = tableSize - 1;
@@ -59,7 +60,7 @@ namespace dspkit {
             fCurPos = inc_clamp_hi(fCurPos, inc, posMax);
 #endif
             iCurPos = (int) fCurPos;
-            moving = (iCurPos < tableSize);
+            moving = (iCurPos < tableSize); // <- FIXME: should be tablesize - 1 i guess
             curVal = start + scale * curTable[iCurPos];
         }
 
@@ -106,7 +107,9 @@ namespace dspkit {
         }
 
         float getNextValue() {
-            if (moving) { move(); }
+            if (moving) {
+                move();
+            }
             return curVal;
         }
 

@@ -2,19 +2,14 @@
 #define DSPKIT_SVF_H
 
 #include <array>
+#include <memory>
 
 namespace dspkit {
 
     class Svf {
     public:
         // c-tor / d-tor
-        Svf();
-
-//        // initialize internal lookup table for linear pitch control
-//        // @param sr: sample rate
-//        // @param baseFreq: base frequency (pitch == 0)
-//        // @param numOct: how many octaves to compute above base frequency
-//        void initPitchTable(double sr);
+        Svf(float *gainTable = nullptr);
 
         // clear the internal filter state
         void clear();
@@ -26,6 +21,15 @@ namespace dspkit {
         // mapping is dependent on parameters passed to `initPitchTable()`
         // @param pitch: linear pitch in [0, 1]
         void setCutoffPitch(float pitch);
+
+        // set table to use for pitch lookup
+        // this allows multiple instances to share table memory
+        void setGainTable(const float* gainTable, int tableSize);
+
+        // fill a table with gain coefficient values from linear pitch
+        // takes minimum and maximum arguments as midi note numbers
+        static void fillGainTable(float* gainTable, int size, float sampleRate,
+                float midiMin=0, float midiMax=127.f);
 
         void setSampleRate(float sr);
         void setCutoff(float fc);
@@ -42,6 +46,8 @@ namespace dspkit {
 
         // calculate and return main coefficient given FC, SR, RQ
         static float getG(float sr, float fc);
+        // set main coefficient directly
+        void setG(float g);
 
         // recalculate cheaper conefficients for RQ only (no `tan`)
         void calcSecondaryCoeffs();
@@ -51,10 +57,6 @@ namespace dspkit {
         void update(float x);
 
     private:
-//        static constexpr size_t gTabSize = 1024;
-//        // lookup table for primary coefficient (pitch-wise)
-//        std::array<float, gTabSize> gTab{};
-
         // sample rate
         float sr{};
         float sr_2{};
@@ -86,6 +88,10 @@ namespace dspkit {
         float hpMix{};
         float bpMix{};
         float brMix{};
+        // table mapping gain coefficients to pitch
+        const float *gTable;
+        int gTableSize;
+        std::unique_ptr<float[]> myGainTable;
     };
 }
 
