@@ -1,4 +1,5 @@
 #include <cmath>
+#include <boost/assert.hpp>
 //#include <iostream>
 
 #include "Lut.hpp"
@@ -10,15 +11,7 @@ using dspkit::Svf;
 using dspkit::Lut;
 using dspkit::Constants;
 
-Svf::Svf(float *gainTable) {
-    if (gainTable == nullptr) {
-        useMyGainTable = true;
-        gTableSize = 1024;
-        myGainTable = std::make_unique<float[]>(gTableSize);
-        setGainTable(myGainTable.get(), gTableSize);
-    } else {
-        useMyGainTable = false;
-    }
+Svf::Svf() : gTable(nullptr) {
     clear();
 }
 
@@ -56,11 +49,7 @@ void Svf::update(float in) {
 
 
 void Svf::setSampleRate(float sr_) {
-    if (useMyGainTable) {
-        Svf::fillGainTable(myGainTable.get(), gTableSize, sr_);
-    }
     this->sr = sr_;
-    this->sr_2 = sr * 0.5f;
     calcCoeffs();
 }
 
@@ -101,9 +90,9 @@ void Svf::setBrMix(float mix) {
 // calculate only secondary coefficients, given primary (e.g. from LUT)
 void Svf::calcSecondaryCoeffs() {
     g1 = g / (1.f + g * (g + rq));
+    g3 = g * g1;
     g4 = 2.f * g1;
     g2 = (g + rq) * g4;
-    g3 = g * g1;
 }
 
 float Svf::getG(float sr, float fc) {
@@ -117,6 +106,7 @@ void Svf::setG(float x) {
 void Svf::setGainTable(const float *gainTable, int tableSize) {
     this->gTable = gainTable;
     gTableSize = tableSize;
+    useMyGainTable = false;
 }
 
 void Svf::fillGainTable(float* table, int size, float sampleRate, float midiMin, float midiMax) {
@@ -125,11 +115,13 @@ void Svf::fillGainTable(float* table, int size, float sampleRate, float midiMin,
     for (int pos=0; pos<size; ++pos) {
         double midi = x * (midiMax - midiMin) + midiMin;
         double hz = Conversion<double>::midihz(midi);
-        table[pos++] = Svf::getG((float) sampleRate, (float) hz);
+        table[pos] = Svf::getG((float) sampleRate, (float) hz);
         x += inc;
     }
 }
 
+// assumption: gain table is not null
 void Svf::setCutoffPitchNoCalc(float pitch) {
+    assert(this->gTable != nullptr);
     setG(Lut<float>::lookupLinear(pitch, gTable, gTableSize));
 }

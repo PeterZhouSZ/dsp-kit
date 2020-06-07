@@ -9,7 +9,7 @@ namespace dspkit {
     class Svf {
     public:
         // c-tor / d-tor
-        Svf(float *gainTable = nullptr);
+        Svf();
 
         // clear the internal filter state
         void clear();
@@ -91,8 +91,6 @@ namespace dspkit {
         // table mapping gain coefficients to pitch
         const float *gTable;
         int gTableSize;
-        std::unique_ptr<float[]> myGainTable;
-        bool useMyGainTable;
     };
 }
 
