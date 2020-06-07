@@ -11,10 +11,13 @@ using dspkit::Lut;
 using dspkit::Constants;
 
 Svf::Svf(float *gainTable) {
-    if (gainTable = nullptr) {
+    if (gainTable == nullptr) {
+        useMyGainTable = true;
         gTableSize = 1024;
         myGainTable = std::make_unique<float[]>(gTableSize);
         setGainTable(myGainTable.get(), gTableSize);
+    } else {
+        useMyGainTable = false;
     }
     clear();
 }
@@ -53,6 +56,9 @@ void Svf::update(float in) {
 
 
 void Svf::setSampleRate(float sr_) {
+    if (useMyGainTable) {
+        Svf::fillGainTable(myGainTable.get(), gTableSize, sr_);
+    }
     this->sr = sr_;
     this->sr_2 = sr * 0.5f;
     calcCoeffs();
@@ -124,6 +130,6 @@ void Svf::fillGainTable(float* table, int size, float sampleRate, float midiMin,
     }
 }
 
-void Svf::setCutoffPitch(float pitch) {
+void Svf::setCutoffPitchNoCalc(float pitch) {
     setG(Lut<float>::lookupLinear(pitch, gTable, gTableSize));
 }

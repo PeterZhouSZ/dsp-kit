@@ -114,7 +114,7 @@ namespace dspkit {
         }
 
     public:
-        // helper: initialize a set of table data using a transform function
+        // helper: initialize a set of table data using a transform function on the default tables.
         static void initTableData(float (*data)[tableSize], const std::function<float(float)>& transform) {
             for (int tab=0; tab<numTables; ++tab) {
                 for (int pos=0; pos<tableSize; ++pos) {

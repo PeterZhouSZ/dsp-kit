@@ -18,9 +18,9 @@ namespace dspkit {
         float processSample(float x);
 
         // set the corner frequency as linear pitch
-        // mapping is dependent on parameters passed to `initPitchTable()`
+        // uses pre-initialized table, so range of pitch can vary
         // @param pitch: linear pitch in [0, 1]
-        void setCutoffPitch(float pitch);
+        void setCutoffPitchNoCalc(float pitch);
 
         // set table to use for pitch lookup
         // this allows multiple instances to share table memory
@@ -92,6 +92,7 @@ namespace dspkit {
         const float *gTable;
         int gTableSize;
         std::unique_ptr<float[]> myGainTable;
+        bool useMyGainTable;
     };
 }
 
