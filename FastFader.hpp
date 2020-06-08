@@ -83,7 +83,7 @@ namespace dspkit {
             state = Stopped;
         }
 
-        float update() {
+        void update() {
             if (state == Rising) { rise(); }
             else if (state == Falling) { fall(); }
         }

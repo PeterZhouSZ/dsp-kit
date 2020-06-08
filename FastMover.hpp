@@ -65,11 +65,12 @@ namespace dspkit {
         }
 
     public:
-        explicit FastMover(TableData tableData= nullptr) {
+        explicit FastMover(TableData tableData = nullptr) {
             shapeTables = (tableData == nullptr) ? defaultShapeTables : tableData;
             riseTable = shapeTables[0];
             fallTable = shapeTables[0];
         }
+
         void setSampleRate(float sr_) {
             sr = sr_;
         }
@@ -106,18 +107,22 @@ namespace dspkit {
             fallTable = shapeTables[shapeTableIndex];
         }
 
-        float getNextValue() {
+        void update() {
             if (moving) {
                 move();
             }
+        }
+
+        float getNextValue() {
+            update();
             return curVal;
         }
 
     public:
         // helper: initialize a set of table data using a transform function on the default tables.
-        static void initTableData(float (*data)[tableSize], const std::function<float(float)>& transform) {
-            for (int tab=0; tab<numTables; ++tab) {
-                for (int pos=0; pos<tableSize; ++pos) {
+        static void initTableData(float (*data)[tableSize], const std::function<float(float)> &transform) {
+            for (int tab = 0; tab < numTables; ++tab) {
+                for (int pos = 0; pos < tableSize; ++pos) {
                     data[tab][pos] = transform(defaultShapeTables[tab][pos]);
                 }
             }
