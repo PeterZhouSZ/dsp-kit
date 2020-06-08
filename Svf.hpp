@@ -24,12 +24,12 @@ namespace dspkit {
 
         // set table to use for pitch lookup
         // this allows multiple instances to share table memory
-        void setGainTable(const float* gainTable, int tableSize);
+        void setGTable(const float* gainTable, int tableSize);
 
         // fill a table with gain coefficient values from linear pitch
         // takes minimum and maximum arguments as midi note numbers
-        static void fillGainTable(float* gainTable, int size, float sampleRate,
-                float midiMin=0, float midiMax=127.f);
+        static void fillGTable(float* gainTable, int size, float sampleRate,
+                               float midiMin=0, float midiMax=127.f);
 
         void setSampleRate(float sr);
         void setCutoff(float fc);

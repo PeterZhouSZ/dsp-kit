@@ -103,12 +103,12 @@ void Svf::setG(float x) {
     this->g = x;
 }
 
-void Svf::setGainTable(const float *gainTable, int tableSize) {
+void Svf::setGTable(const float *gainTable, int tableSize) {
     this->gTable = gainTable;
     gTableSize = tableSize;
 }
 
-void Svf::fillGainTable(float* table, int size, float sampleRate, float midiMin, float midiMax) {
+void Svf::fillGTable(float* table, int size, float sampleRate, float midiMin, float midiMax) {
     double x = midiMin;
     double inc = 1.0 / size;
     for (int pos=0; pos<size; ++pos) {
