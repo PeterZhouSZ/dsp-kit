@@ -11,15 +11,14 @@
 
 namespace dspkit {
 
-    template<size_t numChannels, size_t blockSize>
+    template<size_t numChannels, size_t blockSize,
+	     typename LevelSmoother, typename PanSmoother>
     class AudioBus {
     private:
-        typedef AudioBus<numChannels, blockSize> BusT;
+        typedef AudioBus<numChannels, blockSize, LevelSmoother, PanSmoother> BusT;
     public:
         float buf[numChannels][blockSize];
-        typedef dspkit::FastFader LevelSmoother;
-        typedef dspkit::FastMover PanSmoother;
-
+	
         // clear the entire bus
         void clear() {
             for(size_t ch=0; ch < numChannels; ++ch) {
@@ -59,7 +58,6 @@ namespace dspkit {
             }
         }
 
-
         // sum from bus, without amplitude scaling
         void addFrom(BusT &b, size_t numFrames) {
             assert(numFrames < blockSize);
@@ -80,15 +78,12 @@ namespace dspkit {
             }
         }
 
-
-        // mix from bus, with smoothed amplitude
+        // mix from bus, with fixed amplitude
         void mixFrom(BusT &b, size_t numFrames, LevelSmoother &level) {
             assert(numFrames < blockSize);
-            float l;
-            for(size_t fr=0; fr<numFrames; ++fr) {
-                l = level.getNextValue();
-                for(size_t ch=0; ch < numChannels; ++ch) {
-                    buf[ch][fr] += b.buf[ch][fr] * l;
+            for(size_t ch=0; ch < numChannels; ++ch) {
+                for(size_t fr=0; fr<numFrames; ++fr) {
+                    buf[ch][fr] += b.buf[ch][fr] * level.getNextValue();
                 }
             }
         }
@@ -191,7 +186,7 @@ namespace dspkit {
         }
 
         // mix from mono->stereo bus, with level and pan (linear)
-        void panMixFrom(AudioBus<1, blockSize> a, size_t numFrames,
+        void panMixFrom(AudioBus<1, blockSize, LevelSmoother, PanSmoother> a, size_t numFrames,
                         LevelSmoother &level, PanSmoother& pan) {
             assert(numFrames < blockSize);
             static_assert(numChannels > 1, "using panMixFrom() on mono bus");
@@ -204,10 +199,9 @@ namespace dspkit {
                 buf[1][fr] += x*l*c;
             }
         }
-
-
+        
         // mix from mono->stereo bus, with level and pan (equal power)
-        void panMixEpFrom(AudioBus<1, blockSize> a, size_t numFrames,
+        void panMixEpFrom(AudioBus<1, blockSize, LevelSmoother, PanSmoother> a, size_t numFrames,
                 LevelSmoother &level,  PanSmoother& pan) {
             assert(numFrames < blockSize);
             static_assert(numChannels > 1, "using panMixFrom() on mono bus");

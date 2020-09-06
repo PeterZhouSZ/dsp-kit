@@ -12,6 +12,7 @@
 
 
 namespace dspkit {
+    
     // smoother using a one-pole lowpass filter
     template<typename T>
     class OnePoleSmoother {
